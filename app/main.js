@@ -3,11 +3,16 @@ var cursor = new Cursor();
 setupUserInterface();
 
 var appWidth = $(window).width();
-var appHeight = $(window).height()
-var leapXstart = 350;
-var leapXend = 950;
-var leapYstart = -300;
-var leapYend = 50;
+var appHeight = $(window).height();
+$(window).resize(function() {
+    appWidth = $(window).width();
+    appHeight = $(window).height();
+});
+
+var leapXstart = 200;
+var leapXend = 800;
+var leapYstart = 50;
+var leapYend = 400;
 var getCursorPosition = function(pos) {
     var leapX = pos[0];
     var leapY = pos[1];
@@ -21,12 +26,12 @@ var getCursorPosition = function(pos) {
 Leap.loop({ hand: function(hand) {
     var cursorPosition = getCursorPosition(hand.screenPosition());
     cursor.setScreenPosition(cursorPosition);
-    // console.log(cursorPosition);
+    // console.log(hand.screenPosition()[0]);
 
 }}).use('screenPosition', {scale: LEAPSCALE});
 
 // processSpeech(transcript)
-//  Is called anytime speech is recognized by the Web Speech API
+// Is called anytime speech is recognized by the Web Speech API
 // Input: 
 //    transcript, a string of possibly multiple words that were recognized
 // Output: 
@@ -42,37 +47,8 @@ var processSpeech = function(transcript) {
     };
 
     var processed = false;
-    if (gameState.get('state') == 'setup') {
-        // TODO: 4.3, Starting the game with speech
-        // Detect the 'start' command, and start the game if it was said
-        if (false) {
-            gameState.startGame();
-            processed = true;
-        }
-    }
-
-    else if (gameState.get('state') == 'playing') {
-        if (gameState.isPlayerTurn()) {
-            // TODO: 4.4, Player's turn
-            // Detect the 'fire' command, and register the shot if it was said
-            if (false) {
-                registerPlayerShot();
-
-                processed = true;
-            }
-        }
-
-        else if (gameState.isCpuTurn() && gameState.waitingForPlayer()) {
-            // TODO: 4.5, CPU's turn
-            // Detect the player's response to the CPU's shot: hit, miss, you sunk my ..., game over
-            // and register the CPU's shot if it was said
-            if (false) {
-                var response = "playerResponse";
-                registerCpuShot(response);
-
-                processed = true;
-            }
-        }
+    if (false) {
+        processed = true;
     }
 
     return processed;

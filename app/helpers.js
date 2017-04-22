@@ -19,26 +19,6 @@ var generateSpeech = function(message, callback) {
   }
 };
 
-// getIntersectingTile(screenPosition)
-//    Returns the tile enclosing the input screen position
-// Input:
-//    screenPosition = [x,y]
-// Output:
-//    tilePosition = {row: r, col: c}, if intersecting the board
-//    false, if not intersecting the board
-var getIntersectingTile = function(screenPosition) {
-  if (screenPosition[0] >= gridOrigin[0] && screenPosition[0] <= gridOrigin[0] + BOARDSIZE
-    && screenPosition[1] >= gridOrigin[1] && screenPosition[1] <= gridOrigin[1] + BOARDSIZE) {
-    var column = Math.floor((screenPosition[0] - gridOrigin[0]) / TILESIZE);
-    var row = Math.floor((screenPosition[1] - gridOrigin[1]) / TILESIZE);
-    var tile = tiles[row*NUMTILES + column];
-    return {row: row, col: column};
-  }
-  else {
-    return false;
-  }
-};
-
 // getIntersectingShipAndOffset(screenPosition)
 //    Returns the ship enclosing the input screen position
 // Input:
@@ -82,39 +62,3 @@ var getIntersectingShipAndOffset = function(screenPosition) {
     return false;
   }
 }
-
-// unhighlightTiles()
-//    Clears all highlighting from the tiles
-var unhighlightTiles = function() {
-  tiles.forEach(function(tile) {
-    tile.setProperties({backgroundColor: Colors.GREY});
-  });
-};
-
-// highlightTile(position, color)
-//    Highlights a tile with a particular color
-// Input:
-//    position = {row: r, col: c}, tilePosition
-//    color = color hex code (see Colors at top of file)
-var highlightTile = function(position, color) {
-  tiles[position.row*NUMTILES + position.col].setProperties({backgroundColor: color});
-};
-
-// unblinkTiles()
-//    Clears all blinking from the tiles
-var unblinkTiles = function() {
-  tileModifiers.forEach(function(modifier) {
-    modifier.opacityFrom(1);
-  });
-};
-
-// blinkTile(position)
-//    Causes a tile to blink
-// Input: position = {row: r, col: c}, tilePosition
-var blinkTile = function(position) {
-  var angle = 0;
-  tileModifiers[position.row*NUMTILES + position.col].opacityFrom(function() {
-    angle += 0.1;
-    return Math.cos(angle);
-  });
-};
