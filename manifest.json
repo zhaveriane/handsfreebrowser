@@ -1,0 +1,33 @@
+{
+    // Required
+    "manifest_version": 2,
+    "name": "Hands Free Browser",
+    "version": "1.0",
+
+    // Recommended
+    // "default_locale": "en",
+    "description": "Allows navigation of websites through Leap Motion gestures and voice commands",
+    "permissions": [
+        "tabs",
+        "history"
+    ],
+
+    // Pick one (or none)
+    // "browser_action": {
+    //     "default_icon": {                    // optional
+    //         "16": "images/icon16.png",           // optional
+    //         "24": "images/icon24.png",           // optional
+    //         "32": "images/icon32.png"            // optional
+    //     },
+    //     "default_title": "Google Mail",      // optional; shown in tooltip
+    //     "default_popup": "popup.html"        // optional
+    // },
+
+    // Optional
+    "background": {
+        // Recommended
+        "scripts": ["app/main.js"],
+        // "page": "index.html",
+        "persistent": true
+    }
+}

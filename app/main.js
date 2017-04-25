@@ -28,7 +28,40 @@ Leap.loop({ hand: function(hand) {
     cursor.setScreenPosition(cursorPosition);
     // console.log(hand.screenPosition()[0]);
 
-}}).use('screenPosition', {scale: LEAPSCALE});
+}, enableGestures: true}, function(frame) {
+    if (frame.valid && frame.gestures.length > 0) {
+        for (var i = 0; i < frame.gestures.length; i++) {
+            var gesture = frame.gestures[i];
+            switch (gesture.type) {
+                case "keyTap":
+                    console.log("Key Tap Gesture");
+                    break;
+                case "swipe":
+                    console.log("Swipe Gesture");
+                    // Classify swipe as either horizontal or vertical
+                    var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
+                    // Classify as right-left or up-down
+                    if (isHorizontal) {
+                        if(gesture.direction[0] > 0) {
+                            swipeDirection = "right";
+                            history.back();
+                        } else {
+                            swipeDirection = "left";
+                            history.forward();
+                        }
+                    } else { // vertical
+                        if(gesture.direction[1] > 0) {
+                            swipeDirection = "up";
+                        } else {
+                            swipeDirection = "down";
+                        }                  
+                    }
+                    console.log(swipeDirection)
+                    break;
+            }
+        }
+    }
+}).use('screenPosition', {scale: LEAPSCALE});
 
 // processSpeech(transcript)
 // Is called anytime speech is recognized by the Web Speech API
